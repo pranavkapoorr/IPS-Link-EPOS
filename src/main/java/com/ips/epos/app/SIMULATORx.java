@@ -56,7 +56,11 @@ import java.awt.event.ActionEvent;
  * @author Pranav
  */
 public class SIMULATORx extends javax.swing.JFrame {
-	public static volatile boolean isConnected = false;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 8748836741109262420L;
+    public static volatile boolean isConnected = false;
 	private final ObjectMapper mapper;
 	private ActorSystem system;
 	private ActorRef tcpSender;
@@ -112,10 +116,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 		buttonsPannel = new javax.swing.JPanel();
 		buttonsPannel.setBounds(33, 595, 610, 424);
 		paymentButton = new javax.swing.JButton();
-		paymentButton.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent arg0) {
-		    }
-		});
 		paymentButton.setFont(new Font("Tahoma", Font.BOLD, 18));
 		paymentButton.setBounds(17, 18, 271, 45);
 		reversalButton = new javax.swing.JButton();
@@ -184,8 +184,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 		GTmessage.setBounds(340, 128, 124, 27);
 		GTmessage.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jLabel7 = new javax.swing.JLabel();
-		jLabel7.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		jLabel7.setBounds(164, 211, 193, 40);
+		jLabel7.setFont(new Font("Tahoma", Font.BOLD, 19));
+		jLabel7.setBounds(176, 211, 326, 40);
 		cloudIPAndPortShow = new javax.swing.JLabel();
 		cloudIPAndPortShow.setBounds(296, 269, 163, 29);
 		printButton = new javax.swing.JButton();
@@ -388,7 +388,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		GTmessage.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED,
 				java.awt.Color.white, java.awt.Color.lightGray, java.awt.Color.black, java.awt.Color.darkGray));
 
-		jLabel7.setText("ALTAPAY LINK CLOUD");
+		jLabel7.setText("ALTAPAY LINK SERVER EDITION");
 		jLabel7.setOpaque(true);
 
 		cloudIPAndPortShow.setFont(new Font("Rockwell Condensed", Font.BOLD, 19)); // NOI18N
