@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ips.epos.actors.tcpClient;
 import com.ips.epos.protocols.IpsJson;
+import com.ips.epos.protocols.StatusMessageJson;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -50,6 +51,8 @@ import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 /**
  *
@@ -78,6 +81,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		setSize(new Dimension(1291, 1156));
 		this.mapper = new ObjectMapper();
 		initComponents();
+		startStatusMessageListener();
 	}
 	private void loadProperties(){
 		try {
@@ -150,44 +154,42 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel2 = new javax.swing.JLabel();
 		jLabel2.setBounds(512, 16, 337, 66);
 		jLabel1 = new javax.swing.JLabel();
-		jLabel1.setBounds(23, 2, 415, 181);
+		jLabel1.setBounds(31, 2, 384, 148);
 		jPanel1 = new javax.swing.JPanel();
-		jPanel1.setBounds(31, 326, 612, 253);
+		jPanel1.setBounds(31, 310, 612, 269);
 		jLabel4 = new javax.swing.JLabel();
-		jLabel4.setBounds(47, 96, 177, 23);
+		jLabel4.setBounds(38, 122, 177, 23);
 		jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jLabel3 = new javax.swing.JLabel();
-		jLabel3.setBounds(48, 18, 172, 23);
+		jLabel3.setBounds(38, 49, 172, 23);
 		jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		terminalIpField = new javax.swing.JTextField();
-		terminalIpField.setBounds(340, 16, 149, 27);
+		terminalIpField.setBounds(340, 45, 149, 27);
 		terminalIpField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		terminalPortField = new javax.swing.JTextField();
-		terminalPortField.setBounds(505, 18, 71, 22);
+		terminalPortField.setBounds(505, 49, 71, 22);
 		terminalPortField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		amountField = new javax.swing.JTextField();
-		amountField.setBounds(340, 85, 122, 27);
+		amountField.setBounds(340, 120, 122, 27);
 		amountField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jLabel5 = new javax.swing.JLabel();
-		jLabel5.setBounds(47, 57, 233, 23);
+		jLabel5.setBounds(36, 85, 233, 23);
 		jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		statusMessageIpField = new javax.swing.JTextField();
-		statusMessageIpField.setBounds(340, 55, 149, 27);
+		statusMessageIpField.setBounds(340, 83, 149, 27);
 		statusMessageIpField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		statusMessagePortField = new javax.swing.JTextField();
-		statusMessagePortField.setBounds(505, 58, 71, 20);
+		statusMessagePortField.setBounds(505, 86, 71, 20);
 		statusMessagePortField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jLabel6 = new javax.swing.JLabel();
-		jLabel6.setBounds(47, 130, 98, 23);
+		jLabel6.setBounds(38, 153, 98, 23);
 		jLabel6.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		GTmessage = new javax.swing.JTextField();
-		GTmessage.setBounds(340, 128, 124, 27);
+		GTmessage.setBounds(338, 151, 124, 27);
 		GTmessage.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jLabel7 = new javax.swing.JLabel();
-		jLabel7.setFont(new Font("Tahoma", Font.BOLD, 19));
-		jLabel7.setBounds(176, 211, 326, 40);
-		cloudIPAndPortShow = new javax.swing.JLabel();
-		cloudIPAndPortShow.setBounds(296, 269, 163, 29);
+		jLabel7.setFont(new Font("Tempus Sans ITC", Font.BOLD, 19));
+		jLabel7.setBounds(176, 190, 326, 40);
 		printButton = new javax.swing.JButton();
 		printButton.setBounds(1098, 1027, 109, 40);
 		dual_channel = new javax.swing.JCheckBox();
@@ -332,7 +334,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel1.setForeground(new java.awt.Color(255, 255, 255));
 		jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/altapay.png"))); // NOI18N
-		jLabel1.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.YELLOW, Color.RED, Color.GREEN, Color.BLUE));
+		jLabel1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		jLabel1.setOpaque(true);
 
 		jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -374,7 +376,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		statusMessagePortField
 				.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED,
 						java.awt.Color.white, java.awt.Color.lightGray, java.awt.Color.black, java.awt.Color.darkGray));
-		GTbit.setBounds(340, 206, 149, 31);
+		GTbit.setBounds(340, 225, 149, 31);
 		GTbit.setFont(new Font("Tahoma", Font.PLAIN, 19));
 
 		GTbit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NORMAL", "ADVANCED" }));
@@ -391,10 +393,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel7.setText("ALTAPAY LINK SERVER EDITION");
 		jLabel7.setOpaque(true);
 
-		cloudIPAndPortShow.setFont(new Font("Rockwell Condensed", Font.BOLD, 19)); // NOI18N
-		cloudIPAndPortShow.setText(config.getProperty("Cloud_Ip","000.000.000.000") + ":" + config.getProperty("Cloud_Port","0000"));
-		cloudIPAndPortShow.setOpaque(true);
-
 		
 
 		printButton.setBackground(new java.awt.Color(0, 102, 51));
@@ -410,15 +408,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 		});
 
 		dual_channel.setText("Dual-Channel");
-		dual_channel.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				dual_channelActionPerformed(evt);
-			}
-		});
+		
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		jPanel1.setLayout(null);
 		jPanel1.add(jLabel6);
-		printFlagField.setBounds(47, 206, 177, 31);
+		printFlagField.setBounds(47, 225, 177, 31);
 		printFlagField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jPanel1.add(printFlagField);
 		jPanel1.add(GTbit);
@@ -479,16 +473,37 @@ public class SIMULATORx extends javax.swing.JFrame {
 		JLabel lblWaitCard = new JLabel("Wait 4 Card Removed");
 		lblWaitCard.setOpaque(true);
 		lblWaitCard.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblWaitCard.setBounds(45, 169, 197, 23);
+		lblWaitCard.setBounds(38, 189, 197, 23);
 		jPanel1.add(lblWaitCard);
 		
 		wait4CardRemoved = new JCheckBox("ON/OFF");
-		wait4CardRemoved.setBounds(340, 167, 139, 29);
+		wait4CardRemoved.setBounds(340, 187, 139, 29);
 		jPanel1.add(wait4CardRemoved);
+		
+		JLabel lblServerIpport = new JLabel("SERVER IP+PORT");
+		lblServerIpport.setOpaque(true);
+		lblServerIpport.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblServerIpport.setBounds(33, 13, 151, 23);
+		jPanel1.add(lblServerIpport);
+		
+		serverIp = new JTextField();
+		serverIp.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		serverIp.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, UIManager.getColor("RadioButtonMenuItem.acceleratorSelectionForeground"), Color.DARK_GRAY));
+		serverIp.setBounds(340, 16, 149, 22);
+		serverIp.setText(config.getProperty("Cloud_Ip", "000.000.000.000"));
+		jPanel1.add(serverIp);
+		serverIp.setColumns(10);
+		
+		serverPort = new JTextField();
+		serverPort.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		serverPort.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, Color.BLACK, Color.DARK_GRAY));
+		serverPort.setBounds(505, 16, 71, 22);
+		serverPort.setText(config.getProperty("Cloud_Port", "0000"));
+		jPanel1.add(serverPort);
+		serverPort.setColumns(10);
 		mainXpannel.add(statusReceiptPanel);
 		mainXpannel.add(jLabel1);
 		mainXpannel.add(jLabel2);
-		mainXpannel.add(cloudIPAndPortShow);
 		mainXpannel.add(jLabel7);
 		getContentPane().add(mainPanel);
 		GroupLayout gl_mainPanel = new GroupLayout(mainPanel);
@@ -958,7 +973,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 	}// GEN-LAST:event_startButtonMouseClicked
 
 	private void startConnection() {
-		String[] cloudIpAndPort = cloudIPAndPortShow.getText().split(":");
+		String[] cloudIpAndPort = {serverIp.getText(),serverPort.getText()};
 
 		if (cloudIpAndPort.length == 2) {
 			this.system = ActorSystem.create("IPS_Simulator");
@@ -1003,9 +1018,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} // TODO add your handling code here:
 	}// GEN-LAST:event_printButtonActionPerformed
 
-	private void dual_channelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_dual_channelActionPerformed
-
-		if (dual_channel.isSelected()) {
+	private void startStatusMessageListener() {// GEN-FIRST:event_dual_channelActionPerformed
 			systemX = ActorSystem.create();
 			String statusMsgIp = statusMessageIpField.getText();
 			String statusMsgPort = statusMessagePortField.getText();
@@ -1014,9 +1027,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 			} else {
 				details.setText("FILL IN STATUS MESSAGE DETAILS!!");
 			}
-		} else {
-			systemX = null;
-		}
 	}// GEN-LAST:event_dual_channelActionPerformed
 
 	/**
@@ -1081,8 +1091,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 			 details.setText("new connection from:"+connection.remoteAddress());
 			final Flow<ByteString, ByteString, NotUsed> flow = Flow.of(ByteString.class).map(ByteString::utf8String)
 					.map(s -> {
-						String statusMessage = s.replaceAll("\\$", "");
-						statusMessageField.setText(statusMessage);
+					    StatusMessageJson json = mapper.readValue(s, StatusMessageJson.class);
+                        statusMessageField.setText(json.getStatusMessage());
 						return "";
 					}).map(ByteString::fromString);
 
@@ -1096,7 +1106,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 	private javax.swing.JTextField GTmessage;
 	private javax.swing.JTextField amountField;
 	private javax.swing.JPanel buttonsPannel;
-	protected static javax.swing.JLabel cloudIPAndPortShow;
 	public static javax.swing.JTextArea details;
 	private javax.swing.JButton firstDllButton;
 	private javax.swing.JCheckBox dual_channel;
@@ -1131,6 +1140,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 	private javax.swing.JButton xReportButton;
 	private javax.swing.JButton zReportButton;
 	private static JCheckBox wait4CardRemoved;
+	private JTextField serverIp;
+	private JTextField serverPort;
 	// End of variables declaration//GEN-END:variables
 
 	public static class Printer implements Printable {
