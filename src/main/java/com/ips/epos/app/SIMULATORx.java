@@ -5,24 +5,19 @@
  */
 package com.ips.epos.app;
 
-import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import akka.stream.ActorMaterializer;
-import akka.stream.Materializer;
-import akka.stream.javadsl.*;
-import akka.util.ByteString;
+import akka.io.Tcp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ips.epos.actors.TcpServerActor;
 import com.ips.epos.actors.tcpClient;
 import com.ips.epos.protocols.*;
-
 import java.awt.*;
 import java.awt.print.*;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.util.Properties;
-import java.util.concurrent.CompletionStage;
 import java.util.logging.*;
 import javax.swing.JFrame;
 import javax.swing.GroupLayout.Alignment;
@@ -996,20 +991,20 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 		} // TODO add your handling code here:
 	}// GEN-LAST:event_printButtonActionPerformed
-
 	private void startStatusMessageListener() {// GEN-FIRST:event_dual_channelActionPerformed
-			systemX = ActorSystem.create();
+			systemX = ActorSystem.create("system");
 			String statusMsgIp = statusMessageIpField.getText();
 			String statusMsgPort = statusMessagePortField.getText();
 			if (!statusMsgIp.equals("") && !statusMsgPort.equals("")) {
-				dualChannelStatusMessage(systemX, statusMsgIp, Integer.parseInt(statusMsgPort));
+			    ActorRef tcpMnager =Tcp.get(systemX).manager();
+			    systemX.actorOf(TcpServerActor.props(tcpMnager, new InetSocketAddress(statusMsgIp, Integer.parseInt(statusMsgPort)), mapper));
+			//	dualChannelStatusMessage(systemX, statusMsgIp, Integer.parseInt(statusMsgPort));
 			} else {
 				details.setText("FILL IN STATUS MESSAGE DETAILS!!");
 			}
 	}// GEN-LAST:event_dual_channelActionPerformed
 
 	/**
-	 * @param args
 	 *            the command line arguments
 	 */
 	public static void main(String args[]) {
@@ -1060,12 +1055,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 		receiptField.setText(receiptMessage);
 	}
 
-	protected final void dualChannelStatusMessage(ActorSystem systemX, String listenerIp, int listenerPort) {
-
+/*	protected final void dualChannelStatusMessage(ActorSystem systemX, String listenerIp, int listenerPort) {
 		final Materializer mat = ActorMaterializer.create(systemX);
 		final Source<akka.stream.javadsl.Tcp.IncomingConnection, CompletionStage<akka.stream.javadsl.Tcp.ServerBinding>> connections = akka.stream.javadsl.Tcp
 				.get(systemX).bind(listenerIp, listenerPort);
-		details.setText("boundddd at "+listenerIp+":"+listenerPort);
+		//details.setText("boundddd at "+listenerIp+":"+listenerPort);
 		connections.runForeach(connection -> {
 			 details.setText("new connection from:"+connection.remoteAddress());
 			final Flow<ByteString, ByteString, NotUsed> flow = Flow.of(ByteString.class).map(ByteString::utf8String)
@@ -1077,7 +1071,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 
 			connection.handleWith(flow, mat);
 		}, mat);
-	}
+	}*/
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private final javax.swing.JComboBox<String> GTbit = new javax.swing.JComboBox<>();
