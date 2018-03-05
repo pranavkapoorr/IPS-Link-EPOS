@@ -8,8 +8,11 @@ package com.ips.epos.app;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.io.Tcp;
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 import com.ips.epos.actors.TcpServerActor;
 import com.ips.epos.actors.tcpClient;
 import com.ips.epos.protocols.*;
@@ -54,6 +57,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		setResizable(false);
 		setSize(new Dimension(1291, 1156));
 		this.mapper = new ObjectMapper();
+		this.mapper.setSerializationInclusion(Include.NON_NULL);
 		initComponents();
 		startStatusMessageListener();
 	}
@@ -82,7 +86,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		mainPanel = new javax.swing.JPanel();
 		mainXpannel = new javax.swing.JPanel();
 		statusReceiptPanel = new javax.swing.JPanel();
-		statusReceiptPanel.setBounds(739, 129, 468, 887);
+		statusReceiptPanel.setBounds(739, 127, 468, 887);
 		jScrollPane2 = new javax.swing.JScrollPane();
 		jScrollPane2.setBounds(17, 186, 436, 685);
 		receiptField = new javax.swing.JTextArea();
@@ -92,7 +96,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		statusMessageField.setLineWrap(true);
 		statusMessageField.setFont(new Font("Monospaced", Font.BOLD, 19));
 		buttonsPannel = new javax.swing.JPanel();
-		buttonsPannel.setBounds(33, 595, 610, 424);
+		buttonsPannel.setBounds(33, 565, 610, 457);
 		paymentButton = new javax.swing.JButton();
 		paymentButton.setFont(new Font("Tahoma", Font.BOLD, 18));
 		paymentButton.setBounds(17, 18, 271, 45);
@@ -118,11 +122,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 		reprintReceiptButton.setFont(new Font("Tahoma", Font.BOLD, 18));
 		reprintReceiptButton.setBounds(331, 79, 264, 42);
 		startButton = new javax.swing.JButton();
-		startButton.setBounds(37, 387, 107, 21);
+		startButton.setBounds(43, 423, 107, 21);
 		stopButton = new javax.swing.JButton();
-		stopButton.setBounds(468, 387, 107, 21);
+		stopButton.setBounds(459, 423, 107, 21);
 		jScrollPane3 = new javax.swing.JScrollPane();
-		jScrollPane3.setBounds(27, 309, 550, 65);
+		jScrollPane3.setBounds(33, 345, 550, 65);
 		details = new javax.swing.JTextArea();
 		details.setFont(new Font("Monospaced", Font.PLAIN, 17));
 		jLabel2 = new javax.swing.JLabel();
@@ -130,7 +134,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel1 = new javax.swing.JLabel();
 		jLabel1.setBounds(31, 2, 384, 148);
 		jPanel1 = new javax.swing.JPanel();
-		jPanel1.setBounds(31, 310, 612, 269);
+		jPanel1.setBounds(31, 283, 612, 269);
 		jLabel4 = new javax.swing.JLabel();
 		jLabel4.setBounds(38, 122, 177, 23);
 		jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -252,7 +256,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 		});
 
-		terminalStatusButton.setText("TERMINAL STATUS");
+		terminalStatusButton.setText("PED STATUS");
 		terminalStatusButton.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), Color.WHITE, new Color(0, 0, 0), new Color(102, 102, 102)));
 		terminalStatusButton.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -322,7 +326,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel3.setText("TERMINAL IP+PORT");
 		jLabel3.setOpaque(true);
 		
-		printFlagField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRINT ON ECR", "PRINT ON PED" }));
+		printFlagField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ECR", "PED" }));
 		printFlagField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
 				java.awt.Color.white, java.awt.Color.lightGray, java.awt.Color.black, java.awt.Color.darkGray));
 
@@ -350,12 +354,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 		statusMessagePortField
 				.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED,
 						java.awt.Color.white, java.awt.Color.lightGray, java.awt.Color.black, java.awt.Color.darkGray));
-		GTbit.setBounds(340, 225, 149, 31);
-		GTbit.setFont(new Font("Tahoma", Font.PLAIN, 19));
-
-		GTbit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NORMAL", "ADVANCED" }));
-		GTbit.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
-				java.awt.Color.white, java.awt.Color.lightGray, java.awt.Color.black, java.awt.Color.darkGray));
 
 		jLabel6.setText("Data for GT");
 		jLabel6.setOpaque(true);
@@ -386,10 +384,9 @@ public class SIMULATORx extends javax.swing.JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		jPanel1.setLayout(null);
 		jPanel1.add(jLabel6);
-		printFlagField.setBounds(47, 225, 177, 31);
+		printFlagField.setBounds(340, 225, 85, 31);
 		printFlagField.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jPanel1.add(printFlagField);
-		jPanel1.add(GTbit);
 		jPanel1.add(jLabel5);
 		jPanel1.add(jLabel4);
 		jPanel1.add(jLabel3);
@@ -419,7 +416,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		mainXpannel.add(printButton);
 		mainXpannel.add(buttonsPannel);
 		
-		JButton manualDllButton = new JButton("MANUAL DLL");
+		JButton manualDllButton = new JButton("UPDATE DLL");
 		manualDllButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -442,6 +439,18 @@ public class SIMULATORx extends javax.swing.JFrame {
 		lastTransStatusButton.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), Color.WHITE, new Color(0, 0, 0), Color.GRAY));
 		lastTransStatusButton.setBounds(331, 251, 264, 42);
 		buttonsPannel.add(lastTransStatusButton);
+		
+		JButton btnProbePed = new JButton("PROBE PED");
+		btnProbePed.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        probePedButtonClicked(e);
+		    }
+		});
+		btnProbePed.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnProbePed.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, Color.BLACK));
+		btnProbePed.setBounds(12, 306, 583, 33);
+		buttonsPannel.add(btnProbePed);
 		mainXpannel.add(jPanel1);
 		
 		JLabel lblWaitCard = new JLabel("Wait 4 Card Removed");
@@ -475,6 +484,12 @@ public class SIMULATORx extends javax.swing.JFrame {
 		serverPort.setText(config.getProperty("Cloud_Port", "0000"));
 		jPanel1.add(serverPort);
 		serverPort.setColumns(10);
+		
+		JLabel lblPrintDevice = new JLabel("PRINT DEVICE");
+		lblPrintDevice.setOpaque(true);
+		lblPrintDevice.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblPrintDevice.setBounds(38, 229, 123, 23);
+		jPanel1.add(lblPrintDevice);
 		mainXpannel.add(statusReceiptPanel);
 		mainXpannel.add(jLabel1);
 		mainXpannel.add(jLabel2);
@@ -513,14 +528,10 @@ public class SIMULATORx extends javax.swing.JFrame {
 			setAllDisplays("", "", "");
 			details.setForeground(Color.BLUE);
 			details.setText("starting LAST TRANS STATUS REQUEST");
-			if (printFlagField.getSelectedIndex() == 0) {
-				printFlag = "1";
-			} else {
-				printFlag = "0";
-			}
+			printFlag = "1";
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("L");
+			message.setMessageCode("LastTransactionStatus");
 
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
@@ -559,7 +570,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("M");
+			message.setMessageCode("UpdateDll");
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
 			message.setTerminalPort(terminalPortField.getText());
@@ -603,11 +614,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 				IpsJson message = new IpsJson();
 
 				message.setAmount(amount);
-				message.setMessageCode("P");
-				message.setGTbit(String.valueOf(GTbit.getSelectedIndex()));
-				if (GTbit.getSelectedIndex() == 1) {
-					message.setGTmessage(GTmessage.getText());
-				}
+				message.setMessageCode("Payment");
+				message.setGTmessage(GTmessage.getText());
 				message.setPrintFlag(printFlag);
 				message.setTerminalIp(terminalIpField.getText());
 				message.setTerminalPort(terminalPortField.getText());
@@ -655,11 +663,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 				IpsJson message = new IpsJson();
 
 				message.setAmount(amount);
-				message.setMessageCode("A");
-				message.setGTbit(String.valueOf(GTbit.getSelectedIndex()));
-				if (GTbit.getSelectedIndex() == 1) {
-					message.setGTmessage(GTmessage.getText());
-				}
+				message.setMessageCode("Refund");
+				message.setGTmessage(GTmessage.getText());
 				if(wait4CardRemoved.isSelected()){
                     message.setWait4CardRemoved("true");
                 }
@@ -701,11 +706,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("S");
-			message.setGTbit(String.valueOf(GTbit.getSelectedIndex()));
-			if (GTbit.getSelectedIndex() == 1) {
-				message.setGTmessage(GTmessage.getText());
-			}
+			message.setMessageCode("Reversal");
+			message.setGTmessage(GTmessage.getText());
 			if(wait4CardRemoved.isSelected()){
                 message.setWait4CardRemoved("true");
             }
@@ -747,7 +749,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("D");
+			message.setMessageCode("FirstDll");
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
 			message.setTerminalPort(terminalPortField.getText());
@@ -785,7 +787,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("X");
+			message.setMessageCode("XReport");
 
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
@@ -825,7 +827,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("Z");
+			message.setMessageCode("ZReport");
 
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
@@ -859,14 +861,10 @@ public class SIMULATORx extends javax.swing.JFrame {
 			setAllDisplays("", "", "");
 			details.setForeground(Color.BLUE);
 			details.setText("starting TERMINAL STATUS REQUEST");
-			if (printFlagField.getSelectedIndex() == 0) {
-				printFlag = "1";
-			} else {
-				printFlag = "0";
-			}
+			printFlag = "1";
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("T");
+			message.setMessageCode("TerminalStatus");
 
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
@@ -898,14 +896,10 @@ public class SIMULATORx extends javax.swing.JFrame {
 			setAllDisplays("", "", "");
 			details.setForeground(Color.BLUE);
 			details.setText("starting REPRINT RECEIPT REQUEST");
-			if (printFlagField.getSelectedIndex() == 0) {
-				printFlag = "1";
-			} else {
-				printFlag = "0";
-			}
+			printFlag = "1";
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("R");
+			message.setMessageCode("ReprintReceipt");
 
 			message.setPrintFlag(printFlag);
 			message.setTerminalIp(terminalIpField.getText());
@@ -932,7 +926,42 @@ public class SIMULATORx extends javax.swing.JFrame {
 		}
 		// log.trace("sending // TODO add your handling code here:
 	}// GEN-LAST:event_reprintReceiptButtonMouseClicked
+	
+	private void probePedButtonClicked(MouseEvent e) {
+	    if (isConnected) {
+            setAllDisplays("", "", "");
+            details.setForeground(Color.BLUE);
+            details.setText("starting PROBE PED REQUEST");
+            printFlag = "0";
+            IpsJson message = new IpsJson();
 
+            message.setMessageCode("ProbePed");
+
+            message.setPrintFlag(printFlag);
+            message.setTerminalIp(terminalIpField.getText());
+            message.setTerminalPort(terminalPortField.getText());
+
+            String statusMessageIp = null;
+            String statusMessagePort = null;
+            if (dual_channel.isSelected()) {
+                statusMessageIp = statusMessageIpField.getText();
+                statusMessagePort = statusMessagePortField.getText();
+            }
+            message.setStatusMessageIp(statusMessageIp);
+            message.setStatusMessagePort(statusMessagePort);
+            message.setTimeOut(config.getProperty("timeout_Reprint","0"));
+            String json;
+            try {
+                json = mapper.writeValueAsString(message);
+                tcpSender.tell(json, ActorRef.noSender());
+            } catch (JsonProcessingException ex) {
+                System.exit(0);
+            }
+        } else {
+            details.setText("NO CONNECTION!");
+        }
+        
+    }
 	private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_startButtonMouseClicked
 		if (tcpSender != null) {
 			if (isConnected) {
@@ -1054,27 +1083,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 		statusMessageField.setText(statusMessage);
 		receiptField.setText(receiptMessage);
 	}
-
-/*	protected final void dualChannelStatusMessage(ActorSystem systemX, String listenerIp, int listenerPort) {
-		final Materializer mat = ActorMaterializer.create(systemX);
-		final Source<akka.stream.javadsl.Tcp.IncomingConnection, CompletionStage<akka.stream.javadsl.Tcp.ServerBinding>> connections = akka.stream.javadsl.Tcp
-				.get(systemX).bind(listenerIp, listenerPort);
-		//details.setText("boundddd at "+listenerIp+":"+listenerPort);
-		connections.runForeach(connection -> {
-			 details.setText("new connection from:"+connection.remoteAddress());
-			final Flow<ByteString, ByteString, NotUsed> flow = Flow.of(ByteString.class).map(ByteString::utf8String)
-					.map(s -> {
-					    StatusMessageJson json = mapper.readValue(s, StatusMessageJson.class);
-                        statusMessageField.setText(json.getStatusMessage());
-						return "";
-					}).map(ByteString::fromString);
-
-			connection.handleWith(flow, mat);
-		}, mat);
-	}*/
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private final javax.swing.JComboBox<String> GTbit = new javax.swing.JComboBox<>();
 	private javax.swing.JComboBox<String> printFlagField = new javax.swing.JComboBox<>();
 	private javax.swing.JTextField GTmessage;
 	private javax.swing.JTextField amountField;
