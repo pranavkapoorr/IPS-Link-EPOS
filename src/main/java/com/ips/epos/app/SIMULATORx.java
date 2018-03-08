@@ -139,7 +139,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel4.setBounds(38, 122, 177, 23);
 		jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		jLabel3 = new javax.swing.JLabel();
-		jLabel3.setBounds(38, 49, 172, 23);
+		jLabel3.setBounds(38, 49, 117, 23);
 		jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		terminalIpField = new javax.swing.JTextField();
 		terminalIpField.setBounds(340, 45, 149, 27);
@@ -323,18 +323,18 @@ public class SIMULATORx extends javax.swing.JFrame {
 		jLabel4.setText("AMOUNT (IN PENCE)");
 		jLabel4.setOpaque(true);
 
-		jLabel3.setText("TERMINAL IP+PORT");
+		jLabel3.setText("PED IP+PORT");
 		jLabel3.setOpaque(true);
 		
 		printFlagField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ECR", "PED" }));
 		printFlagField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED,
 				java.awt.Color.white, java.awt.Color.lightGray, java.awt.Color.black, java.awt.Color.darkGray));
 
-		terminalIpField.setText(config.getProperty("Terminal_Ip","000.000.000.000"));
+		terminalIpField.setText(config.getProperty("Ped_Ip","000.000.000.000"));
 		terminalIpField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED,
 				new java.awt.Color(204, 204, 204), null, java.awt.Color.black, new java.awt.Color(102, 102, 102)));
 
-		terminalPortField.setText(config.getProperty("Terminal_Port", "0000"));
+		terminalPortField.setText(config.getProperty("Ped_Port", "0000"));
 		terminalPortField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED,
 				java.awt.Color.lightGray, java.awt.Color.white, java.awt.Color.black, java.awt.Color.darkGray));
 
@@ -456,7 +456,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		JLabel lblWaitCard = new JLabel("Wait 4 Card Removed");
 		lblWaitCard.setOpaque(true);
 		lblWaitCard.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblWaitCard.setBounds(38, 189, 197, 23);
+		lblWaitCard.setBounds(38, 189, 182, 23);
 		jPanel1.add(lblWaitCard);
 		
 		wait4CardRemoved = new JCheckBox("ON/OFF");
@@ -473,7 +473,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		serverIp.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		serverIp.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, UIManager.getColor("RadioButtonMenuItem.acceleratorSelectionForeground"), Color.DARK_GRAY));
 		serverIp.setBounds(340, 16, 149, 22);
-		serverIp.setText(config.getProperty("Cloud_Ip", "000.000.000.000"));
+		serverIp.setText(config.getProperty("Service_Ip", "000.000.000.000"));
 		jPanel1.add(serverIp);
 		serverIp.setColumns(10);
 		
@@ -481,7 +481,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		serverPort.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		serverPort.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, Color.BLACK, Color.DARK_GRAY));
 		serverPort.setBounds(505, 16, 71, 22);
-		serverPort.setText(config.getProperty("Cloud_Port", "0000"));
+		serverPort.setText(config.getProperty("Service_Port", "0000"));
 		jPanel1.add(serverPort);
 		serverPort.setColumns(10);
 		
@@ -531,11 +531,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 			printFlag = "1";
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("LastTransactionStatus");
+			message.setOperationType("LastTransactionStatus");
 
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -570,10 +570,10 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("UpdateDll");
+			message.setOperationType("UpdateDll");
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -614,11 +614,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 				IpsJson message = new IpsJson();
 
 				message.setAmount(amount);
-				message.setMessageCode("Payment");
-				message.setGTmessage(GTmessage.getText());
+				message.setOperationType("Payment");
+				message.setTransactionReference(GTmessage.getText());
 				message.setPrintFlag(printFlag);
-				message.setTerminalIp(terminalIpField.getText());
-				message.setTerminalPort(terminalPortField.getText());
+				message.setPedIp(terminalIpField.getText());
+				message.setPedPort(terminalPortField.getText());
 				String statusMessageIp = null;
 				String statusMessagePort = null;
 				if (dual_channel.isSelected()) {
@@ -663,14 +663,14 @@ public class SIMULATORx extends javax.swing.JFrame {
 				IpsJson message = new IpsJson();
 
 				message.setAmount(amount);
-				message.setMessageCode("Refund");
-				message.setGTmessage(GTmessage.getText());
+				message.setOperationType("Refund");
+				message.setTransactionReference(GTmessage.getText());
 				if(wait4CardRemoved.isSelected()){
                     message.setWait4CardRemoved("true");
                 }
 				message.setPrintFlag(printFlag);
-				message.setTerminalIp(terminalIpField.getText());
-				message.setTerminalPort(terminalPortField.getText());
+				message.setPedIp(terminalIpField.getText());
+				message.setPedPort(terminalPortField.getText());
 
 				String statusMessageIp = null;
 				String statusMessagePort = null;
@@ -706,14 +706,14 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("Reversal");
-			message.setGTmessage(GTmessage.getText());
+			message.setOperationType("Reversal");
+			message.setTransactionReference(GTmessage.getText());
 			if(wait4CardRemoved.isSelected()){
                 message.setWait4CardRemoved("true");
             }
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -749,10 +749,10 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("FirstDll");
+			message.setOperationType("FirstDll");
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -787,11 +787,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("XReport");
+			message.setOperationType("XReport");
 
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -827,11 +827,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("ZReport");
+			message.setOperationType("ZReport");
 
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -864,11 +864,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 			printFlag = "1";
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("TerminalStatus");
+			message.setOperationType("PedStatus");
 
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 			String statusMessageIp = null;
 			String statusMessagePort = null;
 			if (dual_channel.isSelected()) {
@@ -899,11 +899,11 @@ public class SIMULATORx extends javax.swing.JFrame {
 			printFlag = "1";
 			IpsJson message = new IpsJson();
 
-			message.setMessageCode("ReprintReceipt");
+			message.setOperationType("ReprintReceipt");
 
 			message.setPrintFlag(printFlag);
-			message.setTerminalIp(terminalIpField.getText());
-			message.setTerminalPort(terminalPortField.getText());
+			message.setPedIp(terminalIpField.getText());
+			message.setPedPort(terminalPortField.getText());
 
 			String statusMessageIp = null;
 			String statusMessagePort = null;
@@ -935,11 +935,11 @@ public class SIMULATORx extends javax.swing.JFrame {
             printFlag = "0";
             IpsJson message = new IpsJson();
 
-            message.setMessageCode("ProbePed");
+            message.setOperationType("ProbePed");
 
             message.setPrintFlag(printFlag);
-            message.setTerminalIp(terminalIpField.getText());
-            message.setTerminalPort(terminalPortField.getText());
+            message.setPedIp(terminalIpField.getText());
+            message.setPedPort(terminalPortField.getText());
 
             String statusMessageIp = null;
             String statusMessagePort = null;
@@ -949,7 +949,7 @@ public class SIMULATORx extends javax.swing.JFrame {
             }
             message.setStatusMessageIp(statusMessageIp);
             message.setStatusMessagePort(statusMessagePort);
-            message.setTimeOut(config.getProperty("timeout_Reprint","0"));
+            message.setTimeOut(config.getProperty("timeout_Probe","0"));
             String json;
             try {
                 json = mapper.writeValueAsString(message);
