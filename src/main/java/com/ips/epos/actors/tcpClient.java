@@ -7,7 +7,7 @@ import java.util.HashMap;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ips.epos.app.SIMULATORx;
+import com.ips.epos.gui.SIMULATORx;
 import com.ips.epos.protocols.ErrorJson;
 import com.ips.epos.protocols.ReceiptJson;
 import com.ips.epos.protocols.StatusMessageJson;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ips.epos.app;
+package com.ips.epos.gui;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -240,7 +240,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 		});
 
-		xReportButton.setText("X-REPORT");
+		xReportButton.setText("PED BALANCE");
 		xReportButton.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), Color.WHITE, new Color(0, 0, 0), new Color(102, 102, 102)));
 		xReportButton.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -248,7 +248,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 		});
 
-		zReportButton.setText("Z-REPORT");
+		zReportButton.setText("END OF DAY");
 		zReportButton.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 255, 255), Color.WHITE, new Color(0, 0, 0), new Color(102, 102, 102)));
 		zReportButton.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -779,7 +779,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		if (isConnected) {
 			setAllDisplays("", "", "");
 			details.setForeground(Color.BLUE);
-			details.setText("starting X-REPORT REQUEST");
+			details.setText("starting PedBalance REQUEST");
 			if (printFlagField.getSelectedIndex() == 0) {
 				printFlag = "1";
 			} else {
@@ -787,7 +787,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setOperationType("XReport");
+			message.setOperationType("PedBalance");
 
 			message.setPrintFlag(printFlag);
 			message.setPedIp(terminalIpField.getText());
@@ -819,7 +819,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		if (isConnected) {
 			setAllDisplays("", "", "");
 			details.setForeground(Color.BLUE);
-			details.setText("starting Z-REPORT REQUEST");
+			details.setText("starting EndOfDay REQUEST");
 			if (printFlagField.getSelectedIndex() == 0) {
 				printFlag = "1";
 			} else {
@@ -827,7 +827,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 			}
 			IpsJson message = new IpsJson();
 
-			message.setOperationType("ZReport");
+			message.setOperationType("EndOfDay");
 
 			message.setPrintFlag(printFlag);
 			message.setPedIp(terminalIpField.getText());
@@ -860,7 +860,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		if (isConnected) {
 			setAllDisplays("", "", "");
 			details.setForeground(Color.BLUE);
-			details.setText("starting TERMINAL STATUS REQUEST");
+			details.setText("starting PED STATUS REQUEST");
 			printFlag = "1";
 			IpsJson message = new IpsJson();
 
@@ -1036,47 +1036,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 	/**
 	 *            the command line arguments
 	 */
-	public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
-		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting
-		// code (optional) ">
-		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the
-		 * default look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
-		 * html
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(SIMULATORx.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(SIMULATORx.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(SIMULATORx.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(SIMULATORx.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		}
-		// </editor-fold>
-
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				JFrame frameX = new SIMULATORx();
-				frameX.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/IPSLOGO.png")));
-				frameX.setVisible(true);
-			}
-		});
-	}
+	
 
 	private void setAllDisplays(String detailsMessage, String statusMessage, String receiptMessage) {
 		details.setText(detailsMessage);
