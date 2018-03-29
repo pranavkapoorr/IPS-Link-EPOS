@@ -54,9 +54,9 @@ public class tcpClient extends AbstractActor {
 		 private Receive connected(ActorRef Serverconnection) {
 		        return receiveBuilder()
 		               .match(Received.class, msg->{
-		            	   String message = msg.data().utf8String();
+		            	   String message = msg.data().utf8String().replace(String.valueOf((char)10), "\\n");
 		            	            if(message.startsWith("{")&&message.endsWith("}")){
-                                    	if(message.contains("receipt")||message.contains("terminalId")||message.contains("transactionStatus")){
+                                    	if(message.contains("receipt")||message.contains("terminalId")||message.contains("transactionStatus")||message.contains("pedConnectivity")){
 		                                    ReceiptJson json = mapper.readValue(message, ReceiptJson.class);
 		                                    SIMULATORx.details.setText("FINISHED TRANSACTION");
 		                                    SIMULATORx.receiptField.setText(json.getFormattedReceipt());
@@ -66,7 +66,7 @@ public class tcpClient extends AbstractActor {
                                         }else{
                                     		ErrorJson json = mapper.readValue(message,ErrorJson.class);
 		                                    SIMULATORx.details.setText("ERROR in transaction");
-		                                    SIMULATORx.receiptField.setText(json.getErrorText());
+		                                    SIMULATORx.receiptField.setText(json.getErrorCode()+" "+json.getErrorText());
                                     	}
                                     }else{
                                     	SIMULATORx.receiptField.setText(message);
