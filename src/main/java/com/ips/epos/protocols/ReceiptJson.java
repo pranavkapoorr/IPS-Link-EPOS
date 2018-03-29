@@ -9,18 +9,20 @@ public class ReceiptJson {
     private String transactionStatus;
     @JsonProperty
     private String transactionStatusText;
-    @JsonProperty
-    private String aquirerCode;
+   // @JsonProperty
+   // private String aquirerCode;
     @JsonProperty
     private String STAN;
     @JsonProperty
     private String amount;
     @JsonProperty
+    private String operationType;
+    @JsonProperty
     private String transactionType;
     @JsonProperty
     private String aquirerId;
-    @JsonProperty
-    private String cardType;
+    //@JsonProperty
+    //private String cardType;
     @JsonProperty
     private String cardPAN;
     @JsonProperty
@@ -33,10 +35,10 @@ public class ReceiptJson {
     private String transactionDate;
     @JsonProperty
     private String transactionTime;
-    @JsonProperty
+/*    @JsonProperty
     private String hostTotalAmount;
     @JsonProperty
-    private String hostTotalAmountReqByHost;
+    private String hostTotalAmountReqByHost;*/
     @JsonProperty
     private String cardPresentToken;
     @JsonProperty
@@ -67,8 +69,12 @@ public class ReceiptJson {
     private String DccTransactionAmount;
     @JsonProperty
     private String DccTransactionCurrencyDecimal;
-       
-
+    @JsonProperty
+    private String signatureRequired; 
+    @JsonProperty
+    private String pedConnectivity;
+    @JsonProperty
+    private String gatewayConnectivity;
         
 
         @JsonProperty
@@ -82,139 +88,15 @@ public class ReceiptJson {
             return this.receipt;
         }
 
-        public String getTerminalId() {
-            return terminalId;
-        }
 
-        public String getTransactionStatus() {
-            return transactionStatus;
-        }
-
-        public String getAquirerCode() {
-            return aquirerCode;
-        }
-
-        public String getSTAN() {
-            return STAN;
-        }
-
-        public String getAmount() {
-            return amount;
-        }
-
-        public String getTransactionType() {
-            return transactionType;
-        }
-
-        public String getAquirerId() {
-            return aquirerId;
-        }
-
-        public String getCardType() {
-            return cardType;
-        }
-
-        public String getCardPAN() {
-            return cardPAN;
-        }
-
-        public String getActionCode() {
-            return actionCode;
-        }
-
-        public String getProgressiveNumber() {
-            return progressiveNumber;
-        }
-
-        public String getAuthCode() {
-            return authCode;
-        }
-        public String getTransactionDate() {
-            return transactionDate;
-        }
-        public String getTransactionTime() {
-            return transactionTime;
-        }
-
-        public String getHostTotalAmount() {
-            return hostTotalAmount;
-        }
-
-        public String getHostTotalAmountReqByHost() {
-            return hostTotalAmountReqByHost;
-        }
-
-        public String getTransactionStatusText() {
-            return transactionStatusText;
-        }
-
-        public String getCardPresentToken() {
-            return cardPresentToken;
-        }
-
-        public String getOmniChannelToken() {
-            return omniChannelToken;
-        }
-
-        public String getOmniChannelGUID() {
-            return omniChannelGUID;
-        }
-
-     
-        public String getPedDate() {
-            return pedDate;
-        }
-
-        public String getPedTime() {
-            return pedTime;
-        }
-
-        public String getPedStatus() {
-            return pedStatus;
-        }
-
-        public String getFirmwareVersion() {
-            return firmwareVersion;
-        }
-
-        public String getPartNumber() {
-            return partNumber;
-        }
-
-        public String getSerialNumber() {
-            return serialNumber;
-        }
-
-        public String getDccAmount() {
-            return DccAmount;
-        }
-
-        public String getDccCurrency() {
-            return DccCurrency;
-        }
-
-        public String getDccCurrencyCode() {
-            return DccCurrencyCode;
-        }
-
-        public String getDccConversionRate() {
-            return DccConversionRate;
-        }
-
-        public String getDccTransactionAmount() {
-            return DccTransactionAmount;
-        }
-
-        public String getDccTransactionCurrencyDecimal() {
-            return DccTransactionCurrencyDecimal;
-        }
         /**shows receipt fields in receipt area of simulator**/
        public String getFormattedReceipt(){
-           return ifNotNull(new String[]{terminalId, transactionStatus,transactionStatusText, aquirerCode, STAN, amount, 
-                   transactionType, aquirerId, cardType, cardPAN, actionCode, progressiveNumber, authCode, transactionDate,
-                   transactionTime, hostTotalAmount, hostTotalAmountReqByHost, cardPresentToken,omniChannelToken,omniChannelGUID,pedDate, pedTime ,pedStatus,
-                   firmwareVersion, partNumber, serialNumber, DccAmount, DccCurrency, DccCurrencyCode, DccConversionRate, DccTransactionAmount, DccTransactionCurrencyDecimal,
-                   (char)10 + receipt + (char)10});
+           return ifNotNull(new String[]{terminalId, transactionStatus,transactionStatusText, STAN, amount, 
+                   transactionType, aquirerId, operationType, cardPAN, actionCode, progressiveNumber, authCode, transactionDate,
+                   transactionTime, cardPresentToken,omniChannelToken,omniChannelGUID,pedDate, pedTime ,pedStatus,
+                   firmwareVersion, partNumber, serialNumber, DccAmount, DccCurrency, DccCurrencyCode, DccConversionRate, DccTransactionAmount,
+                   DccTransactionCurrencyDecimal,pedConnectivity,gatewayConnectivity,  
+                   (char)10 + receipt + (char)10 , signatureRequired});
        }
        /**formats the fields and remove the null values to show in simulato receipt area**/
        private String ifNotNull(String toDisplay[]){
