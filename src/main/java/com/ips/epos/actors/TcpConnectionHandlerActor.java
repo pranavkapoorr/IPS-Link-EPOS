@@ -8,7 +8,7 @@ import akka.io.Tcp.CommandFailed;
 import akka.io.Tcp.ConnectionClosed;
 import akka.io.Tcp.Received;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ips.epos.app.SIMULATORx;
+import com.ips.epos.gui.SIMULATORx;
 import com.ips.epos.protocols.StatusMessageJson;
 
 

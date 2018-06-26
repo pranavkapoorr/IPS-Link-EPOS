@@ -4,9 +4,10 @@ package com.ips.epos.actors;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ips.epos.app.SIMULATORx;
+import com.ips.epos.gui.SIMULATORx;
 import com.ips.epos.protocols.ErrorJson;
 import com.ips.epos.protocols.ReceiptJson;
 import com.ips.epos.protocols.StatusMessageJson;
@@ -53,19 +54,19 @@ public class tcpClient extends AbstractActor {
 		 private Receive connected(ActorRef Serverconnection) {
 		        return receiveBuilder()
 		               .match(Received.class, msg->{
-		            	   String message = msg.data().utf8String();
+		            	   String message = msg.data().utf8String().replace(String.valueOf((char)10), "\\n");
 		            	            if(message.startsWith("{")&&message.endsWith("}")){
-                                    	if(message.contains("receipt")){
+                                    	if(message.contains("receipt")||message.contains("terminalId")||message.contains("transactionStatus")||message.contains("pedConnectivity")){
 		                                    ReceiptJson json = mapper.readValue(message, ReceiptJson.class);
 		                                    SIMULATORx.details.setText("FINISHED TRANSACTION");
-		                                    SIMULATORx.receiptField.setText(json.getReceipt());
+		                                    SIMULATORx.receiptField.setText(json.getFormattedReceipt());
                                     	}else if(message.contains("statusMessage")){
                                             StatusMessageJson json = mapper.readValue(message, StatusMessageJson.class);
                                             SIMULATORx.statusMessageField.setText(json.getStatusMessage());
                                         }else{
                                     		ErrorJson json = mapper.readValue(message,ErrorJson.class);
 		                                    SIMULATORx.details.setText("ERROR in transaction");
-		                                    SIMULATORx.receiptField.setText(json.getErrorText());
+		                                    SIMULATORx.receiptField.setText(json.getErrorCode()+" "+json.getErrorText());
                                     	}
                                     }else{
                                     	SIMULATORx.receiptField.setText(message);
