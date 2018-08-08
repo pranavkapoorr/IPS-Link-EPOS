@@ -734,8 +734,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION!");
 		}
-		// log.trace("sending // TODO add your handling code here:
-	}// GEN-LAST:event_reversalButtonMouseClicked
+	}
 
 	private void firstDllButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_dllButtonMouseClicked
 		if (isConnected) {
@@ -773,7 +772,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION!");
 		}
-	}// GEN-LAST:event_dllButtonMouseClicked
+	}
 
 	private void xReportButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_xReportButtonMouseClicked
 		if (isConnected) {
@@ -812,8 +811,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION!");
 		}
-		// log.trace("sending // TODO add your handling code here:
-	}// GEN-LAST:event_xReportButtonMouseClicked
+	}
 
 	private void zReportButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_zReportButtonMouseClicked
 		if (isConnected) {
@@ -852,8 +850,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION!");
 		}
-		// log.trace("sending // TODO add your handling code here:
-	}// GEN-LAST:event_zReportButtonMouseClicked
+	}
 
 	private void terminalStatusButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_terminalStatusButtonMouseClicked
 
@@ -888,8 +885,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION!");
 		}
-		// log.trace("sending // TODO add your handling code here:
-	}// GEN-LAST:event_terminalStatusButtonMouseClicked
+	}
 
 	private void reprintReceiptButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_reprintReceiptButtonMouseClicked
 		if (isConnected) {
@@ -924,8 +920,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION!");
 		}
-		// log.trace("sending // TODO add your handling code here:
-	}// GEN-LAST:event_reprintReceiptButtonMouseClicked
+	}
 	
 	private void probePedButtonClicked(MouseEvent e) {
 	    if (isConnected) {
@@ -962,7 +957,7 @@ public class SIMULATORx extends javax.swing.JFrame {
         }
         
     }
-	private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_startButtonMouseClicked
+	private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {
 		if (tcpSender != null) {
 			if (isConnected) {
 				details.setText("TCP CONNECTION ALREADY RUNNING..!!");
@@ -973,8 +968,8 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			startConnection();
 		}
-	}// GEN-LAST:event_startButtonMouseClicked
-
+	}
+	
 	private void startConnection() {
 		String[] cloudIpAndPort = {serverIp.getText(),serverPort.getText()};
 
@@ -987,7 +982,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		}
 	}
 
-	private void stopButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_stopButtonMouseClicked
+	private void stopButtonMouseClicked(java.awt.event.MouseEvent evt) {
 		if (tcpSender != null) {
 			details.setText("STOPPING SERVICE");
 			system.stop(tcpSender);
@@ -997,7 +992,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		} else {
 			details.setText("NO CONNECTION ACTOR RUNNING ALREADY!");
 		}
-	}// GEN-LAST:event_stopButtonMouseClicked
+	}
 
 	
 
@@ -1007,9 +1002,7 @@ public class SIMULATORx extends javax.swing.JFrame {
 		PageFormat preformat = pjob.defaultPage();
 		preformat.setOrientation(PageFormat.PORTRAIT);
 		PageFormat postformat = pjob.pageDialog(preformat);
-		// If user does not hit cancel then print.
 		if (preformat != postformat) {
-			// Set print component
 			pjob.setPrintable(new Printer(receiptField), postformat);
 			if (pjob.printDialog()) {
 				try {
@@ -1018,25 +1011,20 @@ public class SIMULATORx extends javax.swing.JFrame {
 					Logger.getLogger(SIMULATORx.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-		} // TODO add your handling code here:
-	}// GEN-LAST:event_printButtonActionPerformed
-	private void startStatusMessageListener() {// GEN-FIRST:event_dual_channelActionPerformed
+		} 
+	}
+	
+	private void startStatusMessageListener() {
 			systemX = ActorSystem.create("system");
 			String statusMsgIp = statusMessageIpField.getText();
 			String statusMsgPort = statusMessagePortField.getText();
 			if (!statusMsgIp.equals("") && !statusMsgPort.equals("")) {
 			    ActorRef tcpMnager =Tcp.get(systemX).manager();
 			    systemX.actorOf(TcpServerActor.props(tcpMnager, new InetSocketAddress(statusMsgIp, Integer.parseInt(statusMsgPort)), mapper));
-			//	dualChannelStatusMessage(systemX, statusMsgIp, Integer.parseInt(statusMsgPort));
 			} else {
 				details.setText("FILL IN STATUS MESSAGE DETAILS!!");
 			}
-	}// GEN-LAST:event_dual_channelActionPerformed
-
-	/**
-	 *            the command line arguments
-	 */
-	
+	}
 
 	private void setAllDisplays(String detailsMessage, String statusMessage, String receiptMessage) {
 		details.setText(detailsMessage);
@@ -1083,7 +1071,6 @@ public class SIMULATORx extends javax.swing.JFrame {
 	private static JCheckBox wait4CardRemoved;
 	private JTextField serverIp;
 	private JTextField serverPort;
-	// End of variables declaration//GEN-END:variables
 
 	public static class Printer implements Printable {
 		final Component comp;
@@ -1098,12 +1085,10 @@ public class SIMULATORx extends javax.swing.JFrame {
 				return Printable.NO_SUCH_PAGE;
 			}
 
-			// get the bounds of the component
 			Dimension dim = comp.getSize();
 			double cHeight = dim.getHeight();
 			double cWidth = dim.getWidth();
 
-			// get the bounds of the printable area
 			double pHeight = format.getImageableHeight();
 			double pWidth = format.getImageableWidth();
 
