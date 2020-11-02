@@ -1,10 +1,10 @@
-# AltaPay Link EPOS
+# IPS-Link EPOS
 
-[Valitor](http://www.valitor.com) is a renowed name in the European Payment Industry. [International Payment Services Ltd.](http://ips-inter.com), a subcompany of Valitor has come up with new product to ease the payment industry tasks. Here is the epos which connects to their service.
+[International Payment Services Ltd.](http://ips-inter.com), a subcompany of Valitor has come up with new product to ease the payment industry tasks. Here is the epos which connects to their service.
 
-![alt text](https://github.com/pranavkapoorr/AltaPay_Link_epos/blob/master/altapayepos.png?raw=true)
+![alt text](https://github.com/pranavkapoorr/AltaPay_Link_epos/blob/master/ipsepos.png?raw=true)
 
-This product is [Valitor Group](http://www.valitor.com) property. This is the interface to connect to AltaPay Link service. It provides various operations that can be done on the payment device using it. Some of the functionalities it provides are:
+This product is [RQACS Inc.](https://www.rqacs.com) property. This is the interface to connect to IPS-Link service. It provides various operations that can be done on the payment device using it. Some of the functionalities it provides are:
 * Basic Payment
 * Advanced Payment
 * Basic Reversal
@@ -31,7 +31,7 @@ things you need to install the software:
 ```
 * JDK 8
 * ECLIPSE IDE
-* AUTHORISED AltaPay Link License
+* AUTHORISED IPS-Link License
 ```
 ### Installing
 
