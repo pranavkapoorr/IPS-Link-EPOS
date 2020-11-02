@@ -55,6 +55,7 @@ public class SIMULATORx extends JFrame {
      * Creates new form SIMULATORx
      */
     public SIMULATORx() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(SIMULATORx.class.getResource("/com/ips/epos/IPSLOGO.png")));
         getContentPane().setSize(new Dimension(1300, 900));
         getContentPane().setMaximumSize(new Dimension(1300, 2147483647));
         getContentPane().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

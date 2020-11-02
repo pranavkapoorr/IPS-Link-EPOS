@@ -43,7 +43,6 @@ public class app {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frameX = new SIMULATORx();
-                frameX.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/IPSLOGO.png")));
                 frameX.setVisible(true);
             }
         });
